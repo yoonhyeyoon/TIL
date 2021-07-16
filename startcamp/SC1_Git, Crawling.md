@@ -35,7 +35,7 @@
 * ~~git init~~
 * git add .
 * git status (상태확인)
-* git cummit -m '*log*'
+* git commit -m '*log*'
 * git push origin master
 
 git commit -m 'add files'
