@@ -1,20 +1,31 @@
 # API
 
-### API란 ?
+> 약자로, Application Programming Interface 애플리케이션 프로그래밍 인터페이스이다.
+>
+> * 운영체제 (window, mac, ios, android ...) 가 서버(응용프로그램)에 **요청**했을 때 **응답**을 보여주는 플랫폼이다.
+>
+> * 서버와 서버간의 대화  
 
-+ 운영체제 (window, mac, ios, android ...) 가 서버(응용프로그램)에 **요청** 했을 때 **응답** 을 보여주는 플랫폼
+```python
+# 1.정보가 있는 API URL을 확인한다.
+url = 'https://" 
 
-+ 서버와 서버간의 대화  
+# 2. URL로 요청을 보낸다.
+response = requests.get(url).json() 
 
-![image-20210716100944515](SC2_API.assets/image-20210716100944515.png)
+# 3. 응답 결과를 확인하고 정보를 찾는다.
+print(response)
+```
+
+* `json()` ->`json`으로 표현된 코드를 `list`나 `dictionary`로 보여준다.
 
 
 
-## Example !
 
 
+## Example
 
-#### 공공데이터 API
+>  공공데이터 API
 
 ```python
 import requests
@@ -35,9 +46,7 @@ response = requests.get(turl).json
 
 
 
-
-
-#### naver sopping API
+> naver sopping API
 
 ```python
 import requests
@@ -48,8 +57,8 @@ query = '닌텐도스위치'
 url = f"https://openapi.naver.com/v1/search/shop.json?query={query}"
 
 head = {
-    'X-Naver-Client-Id' : '', # 숨김
-    'X-Naver-Client-Secret' : '' # 숨김
+    'X-Naver-Client-Id' : '', # hide
+    'X-Naver-Client-Secret' : '' # hide
 }
 
 response = requests.get(url, headers=head).json()
@@ -80,7 +89,7 @@ print(f'{title} \n 최저가 : {min_value} \n 링크 : {min_url}')
 # 4. 텔레그램으로 출력
 
 # 텔레그렘
-TOKEN = " " # 숨김
+TOKEN = " " # hide
 msg = f'{title} \n 최저가 : {min_value} \n 링크 : {min_url}'
 turl = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id=1868177818&text={msg}"
 response = requests.get(turl).json
