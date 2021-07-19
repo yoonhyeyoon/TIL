@@ -94,6 +94,26 @@ $ git push origin master # (or main)
 
 # Crawling
 
+#### 웹크롤링을 위한 외장모듈
+
+##### 1. request
+
+- 간편한 http 요청처리기가 들어 있는 모듈
+
+  ```python
+  pip install requests
+  ```
+
+##### 2. Beautifulsoup
+
+- 텍스트로 나타나는 html을 우리가 사용하기 쉽게 바꿔주는 역할을 하는 모듈
+
+  ```python
+  pip install beautifulsoup4
+  ```
+
+
+
 > 네이버 국내증시 크롤링 (비공식 경로)
 
 ```python
