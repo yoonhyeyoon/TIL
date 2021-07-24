@@ -122,6 +122,15 @@ def get_middle_char(char):
         print(char[len(char)//2])       
     else:
         print(char[len(char)//2-1],char[len(char)//2]) 
+        
+---
+
+def get_middle_char(char): 
+	idx = len(char) // 2
+    if len(char) % 2:
+        return char[idx]
+    else:
+        return char[idx-1:idx+1]
 ```
 
 # 가변 인자 리스트
@@ -157,6 +166,12 @@ def dict_list_sum(lst):
             if key == 'age':
                 total += value 
     return total
+
+---
+
+	for i in lst:
+        total += i['age']
+    return total
 ```
 
 # 2차원 List의 전체 합 구하기
@@ -168,5 +183,62 @@ def all_list_sum(lst):
         for j in i:
             total += j
     return total 
+```
+
+# 아스키코드 변환하기
+
+```python
+def get_secret_word(n):
+    list = ""
+    for i in n:
+       list += chr(i) # chr, ord
+    return list
+```
+
+```python
+def get_secret_number(n):
+    total = 0
+    for i in n:
+        total += ord(i)
+    return total
+
+get_secret_number('tom') #=> 336
+```
+
+# 절댓값 구하기
+
+```python
+def my_abs(x):
+    if type(x) == complex:
+        return (x.real**2 + x.imag**2) ** 0.5
+    else:
+        if x == 0:
+            return x ** 2
+        elif x < 0:
+            return -x
+        else:
+            return x
+```
+
+# `all()` 직접 구현하기
+
+```python
+def my_all(elements):
+    for i in elements:
+        if not i:
+            return False
+        
+    return True
+```
+
+# `any()` 직접 구현하기
+
+```python
+def my_any(elements):
+    for i in elements:
+        if i:
+            return True
+        
+    return False
 ```
 
