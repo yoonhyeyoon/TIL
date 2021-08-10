@@ -1,3 +1,5 @@
+# Baby Gin
+
 n = int(input())
 for num in range(n):
     a = list(map(int, input().strip()))

@@ -1,3 +1,5 @@
+# gravity
+
 n = int(input())
 for num in range(n):
     N = int(input())
