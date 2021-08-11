@@ -94,8 +94,6 @@ for i in range(N):
                 arr[ni][nj]
 ```
 
-![image-20210811103831228](List2.assets/image-20210811103831228.png)
-
 
 
 #### 전치 행렬
