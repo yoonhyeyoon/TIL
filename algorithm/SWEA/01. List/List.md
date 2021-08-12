@@ -76,7 +76,48 @@ def BubbleSort(a): # 정렬할 List
 
 # 4. 카운팅 정렬 (Counting Sort)
 
-# 5. 완전검색
+> 항목들의 순서를 결정하기 위해 집합에 각 항목이 몇 개씩 있는 지 세는 작업을 한다.
 
-# 6. 그리디 (Greedy Algorithm)
+#### 시간 복잡도
 
+* O(n + k)
+
+```python
+def Counting_Sort(A, B, k):
+# A [] -- 입력 배열(1 to k)
+# B [] -- 정렬된 배열
+# C [] -- 카운트 배열
+
+	C = [0] * (k+1)
+    
+    for i in range(0, len(A)):
+        C[A[i]] += 1	# 카운트 
+        
+    for i in range(1, len(C)):
+        C[i] += C[i-1]	# 누적
+        
+   	for i in range(len(B)-1, -1, -1):
+        C[A[i]] -= 1
+        B[C[A[i]]] = A[i] 
+        
+```
+
+
+
+# 5. 완전검색 (Exaustive Search)
+
+> 모든 경우의 수를 나열해보고 확인하는 기법
+>
+> -> 경우의 수가 상대적으로 작을 때 유용
+
+# 6. 탐욕 알고리즘 (Greedy Algorithm)
+
+> 최적해를 구하는 데 사용되는 근시안적인 방법
+>
+> 일반적으로, 머릿속에 떠오르는 생각을 검증 없이 바로 구현하면 Greedy 접근이 된다
+
+#### 동작 과정
+
+1. 해 선택
+2. 실행 가능성 검사
+3. 해 검사
