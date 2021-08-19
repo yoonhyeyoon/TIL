@@ -1,4 +1,4 @@
-# 파스칼의 삼각형
+# 파스칼의 삼각형 
 
 T = int(input())
 
@@ -18,3 +18,11 @@ for tc in range(1, T+1):
                     lst[i][j] = lst[i-1][j-1]
     for l in range(len(lst)):
         print(*lst[l])
+
+# 방법 2 DP
+    for i in range(n):
+        lst[i][0] = 1
+        lst[i][i] = 1
+    for y in range(2, n):
+        for x in range(1, y):
+            lst[y][x] = lst[y-1][x-1] + lst[y-1][x]
