@@ -143,7 +143,7 @@ TIME_ZONE = 'Asia/Seoul'
 
 > 데이터 흐름에 맞추어 작성
 
-![image-20210831144129643](Template, View, Routing.assets/image-20210831144129643.png)
+![image-20210831141613763](Template, View, Routing.assets/image-20210831141613763.png)
 
 
 
