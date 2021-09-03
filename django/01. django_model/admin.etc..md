@@ -35,6 +35,28 @@ admin.site.register(Article, ArticleAdmin)
 
 * Article 객체가 관리자 인터페이스를 가지고 있다는 것을 알려준다 
 
+**ModelAdmin options**
+
+> •[https://docs.djangoproject.com/en/3.2/ref/contrib/admin/#modeladmin-options](https://docs.djangoproject.com/en/3.2/ref/contrib/admin/)
+
+`list_display`
+
+- models.py 정의한 각각의 속성(컬럼)들의 값(레코드)를 admin 페이지에 출력하도록 설정
+
+  ```python
+  # articles/admin.py
+  
+  from django.contrib import admin
+  from .models import Article
+  
+  class ArticleAdmin(admin.ModelAdmin):
+      list_display = ('pk', 'title', 'content', 'created_at', 'updated_at',)
+  
+  admin.site.register(Article, ArticleAdmin)
+  ```
+
+---
+
 # `redirect()`
 
 > Django shortcut function
@@ -51,6 +73,8 @@ def create(request):
     ...
     return redirect('articles:index') # index로
 ```
+
+---
 
 # Variable Routing
 
