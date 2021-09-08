@@ -144,10 +144,7 @@ STATICFILES_DIRS = [
 > 4. 만약 문자열 기반 모델 필드를 'nullable' 하게 만들고 싶으면 아래와 같이 설정하자.
 >
 >    ```python
->    class Person(models.Model):
->    	name = models.CharField(max_length=25)
->    	bio = models.TextField(max_length=50, blank=True) # null=True는 X
->    	birth_date = models.DateField(null=True, blank=True) # null=True 설정 가능 -> 문자열 기반 필드가 아니기 때문
+>    class Person(models.Model):	name = models.CharField(max_length=25)	bio = models.TextField(max_length=50, blank=True) # null=True는 X	birth_date = models.DateField(null=True, blank=True) # null=True 설정 가능 -> 문자열 기반 필드가 아니기 때문
 >    ```
 >
 >    - null과 blank 옵션의 디폴트는 False이다.
@@ -166,8 +163,7 @@ STATICFILES_DIRS = [
 - `MEDIA_ROOT` 는 `STATIC_ROOT` 와 다른 경로로 지정을 해야 한다.
 
   ```python
-  # settings.py
-  MEDIA_ROOT = BASE_DIR / 'media'
+  # settings.pyMEDIA_ROOT = BASE_DIR / 'media'
   ```
 
 #### `MEDIA_URL`
@@ -183,8 +179,7 @@ STATICFILES_DIRS = [
 - 아무 값이나 작성해도 된다. 하지만 일반적으로 `/media/` 를 사용함
 
   ```python
-  # settings.py
-  MEDIA_URL = '/media/' 
+  # settings.pyMEDIA_URL = '/media/' 
   ```
 
 ### Create
@@ -200,31 +195,11 @@ STATICFILES_DIRS = [
     3. `text/plain` : 인코딩을 하지 않은 문자 상태로 전송. 공백은 '+' 기호로 변환하지만, 특수 문자는 인코딩 하지 않음.
 
   ```django
-  <!-- articles/create.html -->
-  
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
-  </form>
+  <!-- articles/create.html --><form action="" method="POST" enctype="multipart/form-data">  {% csrf_token %}  {{ form.as_p }}  <input type="submit"></form>
   ```
 
   ```python
-  # articles/views.py
-  
-  @require_http_methods(['GET', 'POST'])
-  def create(request):
-      if request.method == 'POST':
-          form = ArticleForm(request.POST, request.FILES)
-          if form.is_valid():
-              article.save()
-              return redirect('articles:detail', article.pk)
-      else: 
-          form = ArticleForm()
-      context = {
-          'form': form,
-      }
-      return render(request, 'articles/create.html', context)
+  # articles/views.py@require_http_methods(['GET', 'POST'])def create(request):    if request.method == 'POST':        form = ArticleForm(request.POST, request.FILES)        if form.is_valid():            article.save()            return redirect('articles:detail', article.pk)    else:         form = ArticleForm()    context = {        'form': form,    }    return render(request, 'articles/create.html', context)
   ```
 
 
@@ -235,17 +210,7 @@ STATICFILES_DIRS = [
 - `article.image` - 파일 이름
 
 ```django
-<!-- articles/detail.html -->
-
-{% extends 'base.html' %}
-
-{% block content %}
-  <h2 class='text-center'>DETAIL</h2>
-  <h3>{{ article.pk }} 번째 글</h3>
-  <img src="{{ article.image.url }}" alt="{{ article.image }}">
-  <hr>
-  ...
-{% endblock %}
+<!-- articles/detail.html -->{% extends 'base.html' %}{% block content %}  <h2 class='text-center'>DETAIL</h2>  <h3>{{ article.pk }} 번째 글</h3>  <img src="{{ article.image.url }}" alt="{{ article.image }}">  <hr>  ...{% endblock %}
 ```
 
 ### Update
@@ -255,26 +220,11 @@ STATICFILES_DIRS = [
 - 실제 수정을 진행 해보고 이미지가 잘 수정 되었는지 확인하기
 
   ```django
-  <!-- articles/update.html -->
-  
-  {% block content %}
-    <h1 class="text-center">UPDATE</h1>
-    <form action="" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% bootstrap_form form layout='horizontal' %}
-      {% buttons submit="Submit" reset="Cancel" %}{% endbuttons %}
-    </form>
-    <hr>
-    <a href="{% url 'articles:detail' article.pk %}">[back]</a>
-  {% endblock %}
+  <!-- articles/update.html -->{% block content %}  <h1 class="text-center">UPDATE</h1>  <form action="" method="POST" enctype="multipart/form-data">    {% csrf_token %}    {% bootstrap_form form layout='horizontal' %}    {% buttons submit="Submit" reset="Cancel" %}{% endbuttons %}  </form>  <hr>  <a href="{% url 'articles:detail' article.pk %}">[back]</a>{% endblock %}
   ```
 
   ```python
-  def update(request, pk):
-      ...
-      if request.method == 'POST':
-          form = ArticleForm(request.POST, request.FILES, instance=article)
-      ...
+  def update(request, pk):    ...    if request.method == 'POST':        form = ArticleForm(request.POST, request.FILES, instance=article)    ...
   ```
 
 ### 추가 설정
@@ -282,16 +232,7 @@ STATICFILES_DIRS = [
 - 한가지 문제가 생긴다. 이미지 필드 설정 이전에 올렸던 이전 게시물들을 보여주는 detail 페이지에서 image 속성을 읽어 오지 못해 페이지를 띄우지 못한다. if 문 분기를 통해 이를 해결할 수 있다.
 
   ```django
-  <!-- articles/detail.html -->
-  
-  {% extends 'base.html' %}
-  
-  {% block content %}
-    <h1>DETAIL</h1>
-    <h2>{{ article.pk }} 번째 글</h2>
-    {% if article.image %}
-      <img src="{{ article.image.url }}" alt="{{ article.image }}">
-    {% endif %}
+  <!-- articles/detail.html -->{% extends 'base.html' %}{% block content %}  <h1>DETAIL</h1>  <h2>{{ article.pk }} 번째 글</h2>  {% if article.image %}    <img src="{{ article.image.url }}" alt="{{ article.image }}">  {% endif %}
   ```
 
 ![image-20210908151259239](STATIC, MEDIA files.assets/image-20210908151259239.png)
@@ -309,40 +250,21 @@ STATICFILES_DIRS = [
 1. 날짜로 분류해보기
 
    ```python
-   # models.py
-   
-   class Article(models.Model):
-       title = models.CharField(max_length=20)
-       content = models.TextField()
-       image = models.ImageField(blank=True, upload_to='%Y/%m/%d/')
-       created_at = models.DateTimeField(auto_now_add=True)
-       updated_at = models.DateTimeField(auto_now=True)
+   # models.pyclass Article(models.Model):    title = models.CharField(max_length=20)    content = models.TextField()    image = models.ImageField(blank=True, upload_to='%Y/%m/%d/')    created_at = models.DateTimeField(auto_now_add=True)    updated_at = models.DateTimeField(auto_now=True)
    ```
 
    ```
-   $ python manage.py makemigrations
-   $ python manage.py migrate
+   $ python manage.py makemigrations$ python manage.py migrate
    ```
 
 2. FileField에 정의된 모델 인스턴스 사용 (참고)
 
    ```python
-   # models.py
-   
-   def articles_image_path(instance, filename):
-       return f'user_{instance.user.pk}/{filename}'
-   
-   class Article(models.Model):
-       title = models.CharField(max_length=20)
-       content = models.TextField()
-       image = models.ImageField(blank=True, upload_to=articles_image_path)
-       created_at = models.DateTimeField(auto_now_add=True)
-       updated_at = models.DateTimeField(auto_now=True)
+   # models.pydef articles_image_path(instance, filename):    return f'user_{instance.user.pk}/{filename}'class Article(models.Model):    title = models.CharField(max_length=20)    content = models.TextField()    image = models.ImageField(blank=True, upload_to=articles_image_path)    created_at = models.DateTimeField(auto_now_add=True)    updated_at = models.DateTimeField(auto_now=True)
    ```
 
    ```
-   $ python manage.py makemigrations
-   $ python manage.py migrate
+   $ python manage.py makemigrations$ python manage.py migrate
    ```
 
    - `instance` --> instance는 Article 모델의 객체
@@ -380,20 +302,13 @@ STATICFILES_DIRS = [
 - resizing은 `django-imagekit` 모듈을 활용한다.
 
   ```
-  $ pip install pilkit # imagekit을 위해 사전 설치 필요
-  $ pip install django-imagekit
-  
-  $ pip freeze > requirements.txt
+  $ pip install pilkit # imagekit을 위해 사전 설치 필요$ pip install django-imagekit$ pip freeze > requirements.txt
   ```
 
 - 설치한 모듈을 INSTALLED_APSS에 등록한다.
 
   ```python
-  INSTALLED_APP = [
-  		...
-  		'imagekit',
-      ...
-  ]
+  INSTALLED_APP = [		...		'imagekit',    ...]
   ```
 
 
@@ -401,28 +316,13 @@ STATICFILES_DIRS = [
 **원본 이미지를 재가공하여 저장 (원본x, 썸네일o)**
 
 ```python
-# models.py
-
-from imagekit.models import ProcessedImageField
-from imagekit.processors import Thumbnail
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=20)
-    content = models.TextField()
-    image = ProcessedImageField(
-                blank=True, 
-                processors=[Thumbnail(200,300)],
-                format='JPEG',
-                options={'quality': 90},
-            )
+# models.pyfrom imagekit.models import ProcessedImageFieldfrom imagekit.processors import Thumbnailclass Article(models.Model):    title = models.CharField(max_length=20)    content = models.TextField()    image = ProcessedImageField(                blank=True,                 processors=[Thumbnail(200,300)],                format='JPEG',                options={'quality': 90},            )
 ```
 
 - `ProcessedImageField()`의 parameter로 들어가 있는 값들은 makemigrations 후에 변경이 되더라도 **다시 makemigrations 를 해줄 필요 없다**.
 
 ```
-$ python manage.py makemigrations
-$ python manage.py migrate
+$ python manage.py makemigrations$ python manage.py migrate
 ```
 
 - 서버를 실행하고 이미지를 업로드 해보자.
