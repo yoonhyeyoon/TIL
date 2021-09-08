@@ -515,9 +515,9 @@ def update(request, pk):
 * 해당 객체가 없을 경우 `DoesNotExist` 예외 대신 Http 404를 raise
 * 코드 실행 단계에서 발생한 에러에 대해서 브라우저는 http status code 500으로 인식함
 
-![image-20210906153649856](03. Form.assets/image-20210906153649856.png)
+![image-20210906153649856](Form.assets/image-20210906153649856.png)
 
-![image-20210906153623110](03. Form.assets/image-20210906153623110.png)
+![image-20210906153623110](Form.assets/image-20210906153623110.png)
 
 * 상황에 따라 적절한 예외처리를 하고 클라이언트에게 올바른 에러를 전달하는 것 또한 개발의 중요한 요소 중 하나
 
@@ -542,7 +542,7 @@ def detail(request, pk):
 * Allowed HTTP methods
   * 요청이 조건을 충족시키지 못하면 `HttpResponseNotAllowed`을 return (405)
 
-![image-20210906155101475](03. Form.assets/image-20210906155101475.png)
+![image-20210906155101475](Form.assets/image-20210906155101475.png)
 
 #### `require_http_methods()`
 
