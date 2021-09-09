@@ -112,19 +112,18 @@ STATICFILES_DIRS = [
   urlpatterns = [
       path('admin/', admin.site.urls),
       path('articles/', include('articles.urls')),
-      path('accounts/', include('accounts.urls')),
   ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
   ```
-
-  ```
+  
+```
   $ python manage.py makemigrations
   $ pip install Pillow
   
   $ python manage.py makemigrations
   $ python manage.py migrate
-  ```
+```
 
-  - 이미지 작성 input이 생성되었는지 확인.
+- 이미지 작성 input이 생성되었는지 확인.
 
 > **null / blank / default 옵션**
 >
@@ -166,7 +165,8 @@ STATICFILES_DIRS = [
 - `MEDIA_ROOT` 는 `STATIC_ROOT` 와 다른 경로로 지정을 해야 한다.
 
   ```python
-  # settings.pyMEDIA_ROOT = BASE_DIR / 'media'
+  # settings.py
+  MEDIA_ROOT = BASE_DIR / 'media'
   ```
 
 #### `MEDIA_URL`
@@ -182,7 +182,8 @@ STATICFILES_DIRS = [
 - 아무 값이나 작성해도 된다. 하지만 일반적으로 `/media/` 를 사용함
 
   ```python
-  # settings.pyMEDIA_URL = '/media/' 
+  # settings.py
+  MEDIA_URL = '/media/' 
   ```
 
 ### Create
@@ -411,3 +412,144 @@ $ python manage.py migrate
 
 - 서버를 실행하고 이미지를 업로드 해보자.
   - 다시 개발자 도구로 이미지의 요청 경로를 확인한다.
+
+## clean up
+
+> https://pypi.org/project/django-cleanup/
+
+* `django-cleanup` 
+* 게시글을 수정하거나 삭제했을 때 media 파일의 image도 삭제될 수 있게 하는 라이브러리
+
+```
+$ pip install django-cleanup
+```
+
+```python
+INSTALLED_APPS = (
+    ...,
+    'django_cleanup',
+)
+```
+
+## Message Framework
+
+> https://docs.djangoproject.com/en/3.2/ref/contrib/messages/
+
+* 어떠한 변화 (생성이나 삭제 등)가 일어났을 때 **!한 번만!** 알림이 뜨게 한다
+
+```python
+# settings.py
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage
+```
+
+```python
+# views.py
+from django.contrib import messages
+
+def create(request):
+    ...
+    	...
+        	message.success(request, '글이 생성되었습니다.')
+def delete(request, pk):
+    ...
+    	...
+        	message.error(request, '글이 삭제되었습니다.')
+```
+
+```django
+<!-- base.html -->
+{% if messages %}
+<div class="messages">
+	{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+...
+```
+
+* tag 수정하는 방법은 두 가지이다
+  1. `extra_tags` 반짝 바꿀 때
+  2. `MESSAGE_TAGS`
+
+```python
+# tag 수정하기
+
+# 1. views.py
+def create(request):
+    ...
+    	...
+        	message.success(request, '글이 생성되었습니다.', extra_tags='primary')
+            
+# 2. settings.py
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+```
+
+## Paginator
+
+> https://docs.djangoproject.com/en/3.2/topics/pagination/
+
+```python
+# views.py
+from django.core.paginator import Paginator
+
+
+def index(request):
+    articles = Article.objects.all()
+	paginator = Paginator(articles, 3)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        #'articles': articles,
+        'page_obj': page_obj,
+    }
+    return render(request, 'crud/index.html', context)
+```
+
+```django
+<!-- index.html -->
+{% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ article.title }}<br>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+```
+
+* 사용하기 편한 ui를 위해 꾸며보자
+* `django bootstrap5` 의 pagination
+
+> https://django-bootstrap-v5.readthedocs.io/en/latest/templatetags.html#bootstrap-pagination
+
+```django
+<!-- index.html -->
+{% %}
+{% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ article.title }}<br>
+{% endfor %}
+
+{% bootstrap_pagination page_obj page_to_show=5 size="large" %}
+```
+
+* dummy data 만드는 법 -> `django seed` 
