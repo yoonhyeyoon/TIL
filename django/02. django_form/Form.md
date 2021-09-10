@@ -579,3 +579,16 @@ def detail(request, pk):
 
   - url 로 delete 시도 후 405 에러페이지 & terminal 로그 확인하기
 
+---
+
+## From의 역할 2가지
+
+1. data validation(유효성 검사)
+2. HTML(<input>) 생성
+
+## Django (Model)Form workflow
+
+> 순서, 흐름을 기억하자
+
+![image-20210910214658786](Form.assets/image-20210910214658786.png)
+
