@@ -74,9 +74,9 @@
 
 > 아래의 문제들을 보면서 서로 대응되는 ORM문과 SQL문을 작성하시오.
 >
-> **vscode 터미널을 좌/우로 나누어 진행하시오. (sqlite / shell_plus)**
+> **vscode 터미널을 좌/우로 나누어 진행 (sqlite / shell_plus)**
 
-`.headers on` 만 켜고 작성해주세요.
+`.headers on` 만 켜고 작성
 
 
 
@@ -107,7 +107,7 @@
    VALUES ('윤', '혜윤', 24, '대구', '010-1234-5678', 100);
    ```
 
-   * 하나의 레코드를 빼고 작성 후 `NOT NULL` constraint 오류를 orm과 sql에서 모두 확인 해보세요.
+   * 하나의 레코드를 빼고 작성 후 `NOT NULL` constraint 오류를 orm과 sql에서 모두 확인
 
 3. 해당 user 레코드 조회
 
@@ -191,7 +191,7 @@
       ```sql
    -- sql
    SELECT first_name FROM users_user
-   WHERE age=30 
+   WHERE age=30;
       ```
 
 3. 나이가 30살 이상인 사람의 인원 수
@@ -200,30 +200,39 @@
 
    ```python
    # orm
+   User.objercts.filter(age__gte=30).count()
    ```
 
       ```sql
    -- sql
+   SELECT COUNT(*) FROM users_user
+   WHERE age>=30;
       ```
 
 4. 나이가 20살 이하인 사람의 인원 수 
 
    ```python
    # orm
+   User.objects.filter(age__lte=20).count()
    ```
 
    ```sql
    -- sql
+   SELECT COUNT(*) FROM users_user
+   WHERE age<=20;
    ```
 
 5. 나이가 30이면서 성이 김씨인 사람의 인원 수
 
    ```python
    # orm
+   User.objects.filter(age=30, last_name='김').count()
    ```
 
       ```sql
    -- sql
+   SELECT COUNT(*) FROM users_user 
+   WHERE age=30 AND last_name='김';
       ```
 
 6. 나이가 30이거나 성이 김씨인 사람?
@@ -231,11 +240,13 @@
    ```python
    # orm
    from django.db.models import Q
-   User.objects.filter
+   User.objects.filter(Q(age=30) | Q(last_name='김'))
    ```
 
    ```sql
    -- sql
+   SELECT * FROM users_user
+   WHERE age=30 OR last_name='김;
    ```
 
 7. 지역번호가 02인 사람의 인원 수
@@ -244,20 +255,26 @@
 
    ```python
    # orm
+   User.objects.filter(phone__startswith='02-').count()
    ```
 
       ```sql
    -- sql
+   SELECT COUNT(*) FROM users_user 
+   WHERE phone LIKE '02-%';
       ```
 
 8. 거주 지역이 강원도이면서 성이 황씨인 사람의 이름
 
    ```python
    # orm
+   User.objects.filter(country='강원도', last_name='황').values('first_name')
    ```
-
+   
       ```sql
    -- sql
+   SELECT first_name FROM users_user 
+   WHERE country='강원도' AND last_name='황';
       ```
 
 
