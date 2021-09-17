@@ -82,6 +82,8 @@
   * 세션 정보는 Django DB의 `django_session` 테이블에 저장됨
 * 모든 것을 세션으로 처리하려고 하면 사용자가 많을 때 서버에 부하가 걸릴 수 있음
 
+![image-20210917194739527](AuthenticationSystem.assets/image-20210917194739527.png)
+
 ---
 
 ## Accounts
