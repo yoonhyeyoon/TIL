@@ -1,11 +1,11 @@
 # 별 찍기 - 10
 
 def draw_star(n) :
-    global Map
+    global map
     
     if n == 3 :
-        Map[0][:3] = Map[2][:3] = [1]*3
-        Map[1][:3] = [1, 0, 1]
+        map[0][:3] = map[2][:3] = [1]*3
+        map[1][:3] = [1, 0, 1]
         return
 
     a = n//3
@@ -15,15 +15,15 @@ def draw_star(n) :
             if i == 1 and j == 1 :
                 continue
             for k in range(a) :
-                Map[a*i+k][a*j:a*(j+1)] = Map[k][:a] # 핵심 아이디어
+                map[a*i+k][a*j:a*(j+1)] = map[k][:a] 
 
 N = int(input())      
 
-Map = [[0 for i in range(N)] for i in range(N)]
+map = [[0 for i in range(N)] for i in range(N)]
 
 draw_star(N)
 
-for i in Map :
+for i in map :
     for j in i :
         if j :
             print('*', end = '')
