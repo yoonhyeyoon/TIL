@@ -40,34 +40,23 @@
 > Uniform Resource Identifier
 
 * 통합 자원 식별자
+
 * 인터넷의 자원을 식별하는 유일한 주소 (정보의 자원을 표현)
+
 * 하위개념
   * URL, URN
   * URN을 사용하는 비중이 매우 적기 때문에 일반적으로 URL은 URI와 같은 의미처럼 사용하기도 함
 
-* Scheme (protocol)
+* URI 구조
 
-`http://`www.example.com:80/path/to/myfile.html/?key=value#quick-start
+  > https://developer.mozilla.org/ko/docs/Learn/Common_questions/What_is_a_URL
 
-* Host (Domain name)
-
-http://`www.example.com`:80/path/to/myfile.html/?key=value#quick-start
-
-* Port
-
-http://www.example.com`:80`/path/to/myfile.html/?key=value#quick-start
-
-* Path
-
-http://www.example.com:80`/path/to/myfile.html`/?key=value#quick-start
-
-* Query (Identifier)
-
-http://www.example.com:80/path/to/myfile.html/`?key=value`#quick-start
-
-* Fragment
-
-http://www.example.com:80/path/to/myfile.html/?key=value`#quick-start`
+  * Scheme (protocol)
+  * Host (Domain name)
+  * Port
+  * Path
+  * Query (Identifier)
+  * Fragment
 
 ### RESTful API
 
@@ -106,7 +95,22 @@ http://www.example.com:80/path/to/myfile.html/?key=value`#quick-start`
 * Web API 구축을 위한 강력한 Toolkit을 제공하는 라이브러리
 * DRF의 Serializer는 Django의 Form 및 ModelForm 클래스와 매우 유사하게 구성되고 작동함
 
+##### `api_view` decorator
+
+* 선택이 아니라 필수!
+* 기본적으로 GET 메서드만 허용되며 다른 메서드는 404 http error
+
 ### Single Model
 
 ### 1:N Relation
+
+
+
+SSL 서버가 사용자에게 보여줌
+
+CSR 브라우저에서 처리
+
+우리가 가진 데이터를 다른 곳에서 사용할 수 있게끔 변환해주는 것
+
+가져온다 변환한다 응답한다 세단계임 
 
