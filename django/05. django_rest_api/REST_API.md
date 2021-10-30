@@ -8,11 +8,11 @@
 
 * 요청 (request)
 
-![image-20211025211901386](C:\Users\HOME\AppData\Roaming\Typora\typora-user-images\image-20211025211901386.png)
+![image-20211025211901386](REST_API.assets/image-20211025211901386.png)
 
 * 응답 (response)
 
-![image-20211025211917472](C:\Users\HOME\AppData\Roaming\Typora\typora-user-images\image-20211025211917472.png)
+![image-20211025211917472](REST_API.assets/image-20211025211917472.png)
 
 ##### 기본 특성
 
@@ -102,15 +102,42 @@
 
 ### Single Model
 
-### 1:N Relation
+##### `many` = True
+
+* 단일 인스턴스가 아닌 QuerySet 등을 직렬화할 때
+
+| GET  | POST | PUT  | DELETE |
+| ---- | ---- | ---- | ------ |
+| 조회 | 작성 | 수정 | 삭제   |
+
+##### Status Code
+
+* DRF에는 status code를 보다 명확하게 읽기 쉽게 만드는 데 사용할 수 잇는 정의된 상수 집합을 제공함
+
+```python
+def example_list(request):
+    return Response(serializer.data, status=tatus.HTTP_201_CREATED)
+```
+
+##### `raise_exception` = True
+
+* HTTP sattus code 400을 응답함
+
+##### Read only Field
+
+* 읽기 전용 필드
+
+##### `source` = 'examplefield.count'
+
+* 점 표기법을 사용하여 속성을 탐색할 수 있음
+
+# TIP
+
+> 단계를 기억하자
+
+1. 가져온다
+2. 변환한다
+3. 응답한다
 
 
-
-SSL 서버가 사용자에게 보여줌
-
-CSR 브라우저에서 처리
-
-우리가 가진 데이터를 다른 곳에서 사용할 수 있게끔 변환해주는 것
-
-가져온다 변환한다 응답한다 세단계임 
 
