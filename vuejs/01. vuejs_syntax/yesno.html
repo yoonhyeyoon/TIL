@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model.trim="question">
+    <p>Answer: {{ msg }}</p>
+    <img :src="imgSrc" alt=""> <br>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        msg: '질문을 해주세요!',
+        question: '',
+        imgSrc: '',
+      },
+      methods: {
+        checkQuestion: function () {
+          const leng = this.question.length
+          if (leng > 0) {
+            // 질문의 마지막 문자 확인
+            // console.log(this.question[this.question.length - 1])
+            if (this.question[leng - 1] === '?') {
+              // 질문으로 확인됨. 요청
+              axios({
+                method: 'get',
+                url: 'https://yesno.wtf/api'
+              })
+              .then(res => {
+                // data 수정하기
+                // console.log(res.data)
+                this.msg = res.data.answer
+                this.imgSrc = res.data.image
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            } else {
+              this.msg = '입력 중...'
+            }
+          } else {
+            // alert('빈 값인데요?')
+            this.msg = '질문해 주세요.'
+          }
+        }
+      },
+
+      watch: {
+        question: function () {
+          this.checkQuestion()
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

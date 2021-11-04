@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      height: 450px;
+    }
+  </style>
+</head>
+<body>
+  <h1>CAT IMG</h1>
+  <div id="app">
+    <img :src="imgSrc" alt="">
+    <br>
+    <button @click="getImg">GET IMG</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        imgSrc: '',
+      },
+      methods: {
+        // cat img api에서 얻어오기
+        getImg: function () {
+          axios({
+            method: 'get',
+            url: 'https://api.thecatapi.com/v1/images/search'
+          })
+          .then(res => {
+            // console.log(res.data[0].url)
+            // data 에 받은 정보를 할당
+            this.imgSrc = res.data[0].url
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }
+      },
+      // 뷰 인스턴스가 초기화 되었을 때 실행되는 life cycle hook
+      created: function () {
+        // 데이터 요청
+        this.getImg()
+      },
+      // imgSrc가 변경이 되면 실행
+      updated: function () {
+        // 변경된 주소를 console 창에 출력
+        console.log(this.imgSrc)
+      }
+    })
+  </script>
+</body>
+</html>
