@@ -1,18 +1,20 @@
 def solution(priorities, location):
     answer = 0
-    loc = 0
-    cnt = 0
-    while priorities:
-        j = priorities.pop(0)
-        
-        for prioritie in priorities:
-            if j < prioritie:
-                priorities.append(j)
-                cnt += 1
-            
-            
-        loc += 1
-        if loc == location:
-            answer = cnt-len(priorities)+1
     
+    idx_lst = [c for c in range(len(priorities))]
+    i = 0
+    
+    while True:
+        
+        if priorities[i] < max(priorities[i+1:]):
+            priorities.append(priorities.pop(i))
+            idx_lst.append(idx_lst.pop(i))
+            
+        else:
+            i += 1
+            
+        if priorities == sorted(priorities, reverse=True):
+            break
+            
+    answer = idx_lst.index(location) + 1
     return answer
