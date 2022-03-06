@@ -14,11 +14,24 @@ function MyForm({ onSubmit }: MyFormProps) {
 
   const { name, description } = form;
 
-  const onChange = (e: any) => {
-    // 일단 모를떄는 any 로 설정
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 모를땐 any
+    console.log(e.target);
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (e: any) => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(form);
+    setForm({
+      name: "",
+      description: "",
+    }); // 초기화
+  };
 
   return (
     <form onSubmit={handleSubmit}>
