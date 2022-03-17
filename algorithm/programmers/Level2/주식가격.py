@@ -1,3 +1,4 @@
+# 시간복잡도 고려해주기
 from collections import deque
 
 def solution(prices):
